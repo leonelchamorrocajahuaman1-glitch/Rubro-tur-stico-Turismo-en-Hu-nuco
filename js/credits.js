@@ -1,0 +1,1 @@
+window.WILD_CREDITS = {};

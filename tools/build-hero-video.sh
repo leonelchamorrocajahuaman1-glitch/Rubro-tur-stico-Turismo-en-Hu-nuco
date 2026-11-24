@@ -6,7 +6,7 @@
 # y el bucle sea continuo.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-IMGS=(tingo bella2 kotosh pampa monzon plaza)
+IMGS=(tingo bella2 kotosh pampa3 monzon plaza-noche)
 W=1600; H=800; FPS=30; D=5; X=1
 TMP=$(mktemp -d)
 i=0
@@ -32,7 +32,7 @@ filter=${filter%;}
 LOOP=$(( (N-1)*(D-X) ))
 mkdir -p assets/video
 ffmpeg -loglevel error -y -i "$TMP/c0.mp4" $inputs -filter_complex "$filter" -map "$prev" \
-  -ss $X -t $LOOP -an -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -movflags +faststart \
+  -ss $X -t $LOOP -an -c:v libx264 -preset slow -crf 30 -pix_fmt yuv420p -movflags +faststart \
   assets/video/huanuco.mp4
 # póster = primer fotograma
 ffmpeg -loglevel error -y -ss 0 -i assets/video/huanuco.mp4 -frames:v 1 -q:v 3 assets/img/hero-poster.jpg

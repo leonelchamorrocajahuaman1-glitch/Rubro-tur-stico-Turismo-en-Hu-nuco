@@ -316,6 +316,7 @@
     fill(i);
     if (typeof modal.showModal === "function") modal.showModal();
     else modal.setAttribute("open", "");
+    requestAnimationFrame(() => { $(".modal__inner").scrollTop = 0; $(".modal__body").scrollTop = 0; });
     history.replaceState(null, "", `#destino-${id}`);
   }
   function closeModal() {

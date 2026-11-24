@@ -43,7 +43,7 @@ window.WILD_DATA = {
       short: "Bella Durmiente",
       cat: "naturaleza",
       place: "Tingo María",
-      img: "bella",
+      img: "bella2",
       line: "La silueta de montaña que vigila Tingo María.",
       intro:
         "Frente a Tingo María, la cadena montañosa de la Bella Durmiente dibuja la silueta de una mujer recostada sobre la selva. Es el emblema de la ciudad, forma parte del Parque Nacional Tingo María y es protagonista de leyendas locales.",
@@ -88,19 +88,22 @@ window.WILD_DATA = {
       cat: "naturaleza",
       place: "Parque Nacional Tingo María",
       img: "cueva",
-      line: "El hogar de los guácharos, aves que vuelan en la oscuridad.",
+      line: "El hogar del guácharo, el ave que dio origen al Parque Nacional.",
       intro:
-        "Una enorme caverna de roca caliza dentro del Parque Nacional Tingo María. A pesar de su nombre, sus habitantes más famosos son los guácharos (Steatornis caripensis), aves nocturnas que se orientan en la oscuridad mediante sonidos.",
+        "Una gran caverna dentro del Parque Nacional Tingo María, con una entrada de unos 20 metros de alto por 30 de ancho. Pese a su nombre, sus habitantes más famosos son los guácharos (Steatornis caripensis), aves nocturnas cuya conservación dio origen al Parque. El sabio Antonio Raimondi describió la caverna y sus aves en 1874.",
       see: [
         "Colonias de guácharos en las paredes y bóvedas de la cueva.",
-        "Estalactitas, estalagmitas y formaciones de roca caliza.",
-        "Loros y otras aves que anidan cerca de la entrada."
+        "Estalactitas y estalagmitas formadas durante miles de años.",
+        "Murciélagos: el Parque es reconocido como área importante para su conservación."
       ],
       access:
-        "Ubicada en la zona turística del Parque Nacional, a pocos kilómetros de Tingo María, cruzando el río Monzón.",
+        "Ubicada en la zona turística del Parque Nacional, a pocos kilómetros de Tingo María, cruzando el río Monzón. En la entrada hay paneles informativos del SERNANP con las normas de visita.",
       tips: [
-        "Usa calzado con buen agarre: el suelo puede estar húmedo y resbaladizo.",
-        "Evita el flash y el ruido para no perturbar a las aves."
+        "No uses linternas de luz blanca directamente sobre las aves ni hagas ruido.",
+        "Está prohibido consumir alimentos dentro de la cueva y alimentar a la fauna.",
+        "No te apoyes en las barandas y no salgas del camino establecido.",
+        "Según las normas del área, los niños menores de 2 años no deben ingresar.",
+        "Usa calzado con buen agarre: el suelo puede estar húmedo."
       ]
     },
     {
@@ -130,7 +133,7 @@ window.WILD_DATA = {
       short: "Laguna de los Milagros",
       cat: "naturaleza",
       place: "Alrededores de Tingo María",
-      img: "laguna",
+      img: null,
       line: "Un espejo de agua rodeado de selva.",
       intro:
         "Una laguna rodeada de vegetación tropical en los alrededores de Tingo María, apreciada por los visitantes como un espacio de descanso y contacto con la naturaleza de la selva alta huanuqueña.",
@@ -151,7 +154,7 @@ window.WILD_DATA = {
       short: "Plaza de Armas",
       cat: "ciudad",
       place: "Centro histórico de Huánuco",
-      img: "plaza",
+      img: "plaza-noche",
       line: "El corazón de una ciudad fundada en 1539.",
       intro:
         "El punto de partida para conocer la ciudad de Huánuco, fundada por los españoles en 1539. Alrededor de la plaza se encuentran la Catedral, su emblemática pileta y la escultura dedicada a los Negritos de Huánuco, la danza más representativa de la región.",
@@ -173,7 +176,7 @@ window.WILD_DATA = {
       short: "Huánuco Pampa",
       cat: "arqueologia",
       place: "La Unión · Dos de Mayo",
-      img: "pampa",
+      img: "pampa3",
       line: "Una gran ciudad inca sobre el Qhapaq Ñan.",
       intro:
         "También llamado Huánuco Viejo, fue uno de los principales centros administrativos incas, levantado en una meseta altoandina junto al Qhapaq Ñan, el Camino Inca, declarado Patrimonio Mundial por la UNESCO en 2014.",
@@ -196,14 +199,14 @@ window.WILD_DATA = {
       n: "01",
       title: "Civilizaciones milenarias",
       text: "Del templo precerámico de Kotosh a la gran ciudad inca de Huánuco Pampa: miles de años de historia andina en una sola región.",
-      img: "kotosh-manos",
+      img: "kotosh-vista",
       links: ["kotosh", "huanuco-pampa"]
     },
     {
       n: "02",
       title: "Selva alta y aves",
       text: "Senderos, miradores y cuevas en Tingo María. Observa guácharos, loros y la vida del bosque dentro del Parque Nacional.",
-      img: "tingo-pano",
+      img: "bella",
       links: ["parque-nacional", "cueva-lechuzas", "bella-durmiente"]
     },
     {

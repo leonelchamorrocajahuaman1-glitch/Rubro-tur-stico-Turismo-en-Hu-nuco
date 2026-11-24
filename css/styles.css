@@ -395,7 +395,7 @@ button { font: inherit; color: inherit; }
 /* =========================================================
    DESTINOS
    ========================================================= */
-.dest { background: var(--white); border-radius: clamp(28px, 4vw, 56px) clamp(28px, 4vw, 56px) 0 0; }
+.dest { background: var(--white); border-radius: clamp(28px, 4vw, 56px); margin: 0 clamp(8px, 1.4vw, 20px); }
 .dest__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; margin-bottom: 44px; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {
@@ -686,7 +686,7 @@ fieldset.field { border: 0; }
 @media (max-width: 860px) {
   .intro__grid, .contact__grid { grid-template-columns: 1fr; }
   .modal__inner { grid-template-columns: 1fr; overflow-y: auto; max-height: calc(100dvh - 32px); }
-  .modal__media { min-height: 0; aspect-ratio: 16 / 10; }
+  .modal__media { min-height: 0; height: min(58vw, 320px); flex: none; }
   .modal__body { max-height: none; overflow: visible; }
 }
 

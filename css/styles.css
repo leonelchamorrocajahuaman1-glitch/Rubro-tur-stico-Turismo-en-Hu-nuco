@@ -641,6 +641,9 @@ fieldset.field { border: 0; }
   padding: 16px 18px; border-radius: 14px; background: #e3eee5; color: var(--jungle); font-size: 15px;
 }
 .form__ok.is-on { display: block; }
+.form__ok.is-error { background: #fbe9e4; color: #8a2d18; }
+.form__ok a { text-decoration: underline; font-weight: 600; }
+.form .btn:disabled { opacity: .6; cursor: progress; }
 
 /* =========================================================
    FOOTER

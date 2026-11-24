@@ -396,7 +396,25 @@
   }
   rules.forEach((r) => $(r[0]).addEventListener("blur", () => { if ($(r[0]).value) check(r); }));
 
-  form.addEventListener("submit", (e) => {
+  /* Envío por FormSubmit (https://formsubmit.co): reenvía cada consulta
+     al correo de CONTACT_EMAIL. La primera vez, FormSubmit manda un correo
+     de activación a esa dirección y hay que confirmarlo una sola vez.
+     Después puedes reemplazar el correo por el alias aleatorio que
+     FormSubmit te envía, para no exponer tu dirección en el código
+     (cámbialo aquí y en el atributo action del formulario en index.html). */
+  const CONTACT_EMAIL = "leonelchamorrocajahuaman1@gmail.com";
+  const ENDPOINT = "https://formsubmit.co/ajax/" + CONTACT_EMAIL;
+  const submitBtn = $("button[type=submit]", form);
+  const okBox = $("#formOk");
+
+  function say(html, isError) {
+    okBox.innerHTML = html;
+    okBox.classList.add("is-on");
+    okBox.classList.toggle("is-error", !!isError);
+    okBox.focus();
+  }
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const results = rules.map(check);
     if (results.includes(false)) {
@@ -404,14 +422,51 @@
       return;
     }
     const fd = new FormData(form);
-    const picks = fd.getAll("interes").map((id) => byId[id].short);
-    const name = fd.get("nombre").trim().split(" ")[0];
-    const ok = $("#formOk");
-    ok.textContent = `¡Gracias, ${name}! Recibimos tu consulta${picks.length ? ` sobre ${picks.join(", ")}` : ""}. Te escribiremos pronto para ayudarte a descubrir Huánuco.`;
-    ok.classList.add("is-on");
-    ok.focus();
-    form.reset();
-    $$("[aria-invalid]", form).forEach((el) => el.removeAttribute("aria-invalid"));
+    if (fd.get("_honey")) return; // trampa para bots
+    const ids = fd.getAll("interes");
+    const nombre = fd.get("nombre").trim();
+    const correo = fd.get("email").trim();
+    const payload = {
+      "Nombre": nombre,
+      "Correo": correo,
+      "Viaja desde": fd.get("origen") || "No indicado",
+      "Fecha aproximada": fd.get("fecha") || "No indicada",
+      "Destinos de interés": ids.length ? ids.map((id) => byId[id].name).join(", ") : "No indicados",
+      "Mensaje": fd.get("mensaje").trim(),
+      _subject: "Nueva consulta turística de " + nombre + " · WILD Huánuco",
+      _replyto: correo,
+      _template: "table",
+      _captcha: "false"
+    };
+
+    const label = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Enviando…";
+    okBox.classList.remove("is-on");
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || String(data.success) !== "true") throw new Error(data.message || "HTTP " + res.status);
+      const picks = ids.map((id) => byId[id].short);
+      say(esc(`¡Gracias, ${nombre.split(" ")[0]}! Recibimos tu consulta${picks.length ? ` sobre ${picks.join(", ")}` : ""}. Te escribiremos pronto para ayudarte a descubrir Huánuco.`));
+      form.reset();
+      $$("[aria-invalid]", form).forEach((el) => el.removeAttribute("aria-invalid"));
+    } catch (err) {
+      console.warn("Formulario de contacto:", err);
+      const body = Object.entries(payload)
+        .filter(([k]) => !k.startsWith("_"))
+        .map(([k, v]) => k + ": " + v)
+        .join("\n");
+      const mailto = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(payload._subject) + "&body=" + encodeURIComponent(body);
+      say(`No pudimos enviar tu consulta en este momento. <a href="${esc(mailto)}">Envíala por correo</a> o inténtalo de nuevo en unos minutos.`, true);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = label;
+    }
   });
 
   /* =======================================================

@@ -36,9 +36,16 @@ y abre <http://localhost:8000>.
 - **Video de la portada:** reemplaza `assets/video/huanuco.mp4` por un video propio
   (2:1 apaisado, silencioso, en bucle) o vuelve a generarlo con
   `tools/build-hero-video.sh`. Ajusta `heroCaptions` en `js/data.js` a sus tiempos.
-- **Formulario de contacto:** hoy valida y confirma en pantalla, pero no envía
-  datos. Conéctalo a tu correo o servicio de formularios en el bloque *CONTACTO*
-  de `js/main.js`.
+- **Formulario de contacto:** envía cada consulta por correo mediante
+  [FormSubmit](https://formsubmit.co), sin servidor propio. La dirección está en
+  `CONTACT_EMAIL` (`js/main.js`) y en el `action` del formulario (`index.html`).
+  1. Publica el sitio en un servidor web (FormSubmit no funciona abriendo el
+     archivo directamente desde el disco).
+  2. Envía una primera consulta de prueba: FormSubmit mandará a tu correo un
+     mensaje de activación. Confírmalo (revisa también la carpeta de spam).
+  3. Opcional: FormSubmit te dará un alias aleatorio; reemplaza tu correo por ese
+     alias en los dos lugares para que tu dirección no quede visible en el código.
+  Si el envío falla, el formulario ofrece mandar la consulta por correo (`mailto:`).
 
 ## Información turística
 

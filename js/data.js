@@ -8,6 +8,12 @@
    ========================================================= */
 
 window.WILD_DATA = {
+  /* WhatsApp de contacto: solo dígitos, con el código de país.
+     Ejemplo para Perú: "51987654321". Si está vacío, los botones
+     de WhatsApp no se muestran. */
+  whatsapp: "",
+  whatsappGreeting: "Hola, WILD. Quiero información para visitar Huánuco.",
+
   categories: {
     arqueologia: "Arqueología",
     naturaleza: "Naturaleza",

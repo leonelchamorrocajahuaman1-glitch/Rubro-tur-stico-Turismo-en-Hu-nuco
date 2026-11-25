@@ -878,3 +878,58 @@ fieldset.field { border: 0; }
   .modal__pager { margin-top: 22px; }
   .pager__btn { max-width: 40%; font-size: 13.5px; }
 }
+
+/* =========================================================
+   WHATSAPP
+   ========================================================= */
+:root { --wa: #1f9e55; --wa-dark: #17804a; }
+[data-wa][hidden], [data-wa-block][hidden] { display: none !important; }
+.wa-ico { width: 20px; height: 20px; flex: none; }
+.wa-ico path { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.wa-ico path + path { fill: currentColor; stroke: none; }
+
+.wa-float {
+  position: fixed; z-index: 45;
+  right: calc(16px + env(safe-area-inset-right, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 52px; padding: 0 20px 0 16px; border-radius: 999px;
+  background: var(--wa); color: #fff; font-weight: 650; font-size: 15px;
+  box-shadow: 0 8px 24px rgba(16,40,24,.28);
+  transition: transform .25s var(--ease), background .2s, opacity .4s;
+}
+.wa-float:hover { background: var(--wa-dark); transform: translateY(-2px); }
+.wa-float .wa-ico { width: 24px; height: 24px; }
+body.is-intro .wa-float { opacity: 0; pointer-events: none; }
+body.has-wa .totop { bottom: calc(80px + env(safe-area-inset-bottom, 0px)); right: calc(18px + env(safe-area-inset-right, 0px)); }
+
+.wa-card {
+  margin-top: 30px;
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 20px; border-radius: 20px;
+  background: var(--wa); color: #fff;
+  transition: background .2s, transform .25s var(--ease);
+}
+.wa-card:hover { background: var(--wa-dark); transform: translateY(-2px); }
+.wa-card__ico { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,.16); display: grid; place-items: center; flex: none; }
+.wa-card__ico .wa-ico { width: 26px; height: 26px; }
+.wa-card__txt { display: grid; gap: 2px; min-width: 0; }
+.wa-card__txt b { font-size: 17px; }
+.wa-card__txt > span { font-size: 14px; opacity: .9; }
+.wa-card__go { width: 20px; height: 20px; margin-left: auto; flex: none; }
+.wa-card__go path { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.btn--wa { background: var(--wa); }
+.btn--wa:hover { background: var(--wa-dark); }
+.btn--wa .wa-ico { width: 18px; height: 18px; }
+
+.menu__wa { margin-top: 10px; background: var(--wa); height: 52px; font-size: 16px; align-self: stretch; }
+.menu__wa:hover { background: var(--wa-dark); }
+.foot-wa { margin-top: 12px; }
+.foot-wa a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--wa); }
+
+@media (max-width: 720px) {
+  .wa-float { height: 52px; width: 52px; padding: 0; justify-content: center; }
+  .wa-float span { display: none; }
+  body.has-wa .totop { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); right: calc(18px + env(safe-area-inset-right, 0px)); width: 44px; height: 44px; }
+}

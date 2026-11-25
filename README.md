@@ -47,6 +47,11 @@ y abre <http://localhost:8000>.
      alias en los dos lugares para que tu dirección no quede visible en el código.
   Si el envío falla, el formulario ofrece mandar la consulta por correo (`mailto:`).
 
+- **WhatsApp:** pon tu número en `whatsapp` al inicio de `js/data.js` (solo dígitos,
+  con código de país; en Perú, `51` + los 9 dígitos del celular). Se activan el botón
+  flotante, la tarjeta en Contacto, el botón del menú móvil, el pie de página y un
+  botón en cada ficha con un mensaje ya escrito sobre ese destino.
+
 ## Información turística
 
 Los textos son generales y referenciales. Horarios, tarifas y condiciones de acceso

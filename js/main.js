@@ -17,6 +17,24 @@
   const REC = params.get("rec") === "1";
 
   /* =======================================================
+     WHATSAPP · se activa al poner el número en js/data.js
+     ======================================================= */
+  const WA_NUMBER = String(DATA.whatsapp || "").replace(/\D/g, "");
+  const waLink = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+  function waPretty(n) {
+    // Perú: 51 + 9 dígitos → +51 987 654 321
+    if (n.length === 11 && n.startsWith("51")) return `+51 ${n.slice(2, 5)} ${n.slice(5, 8)} ${n.slice(8)}`;
+    return "+" + n;
+  }
+  if (WA_NUMBER.length >= 8) {
+    document.body.classList.add("has-wa");
+    $$('[data-wa="general"]').forEach((a) => { a.href = waLink(DATA.whatsappGreeting); a.hidden = false; });
+    $$("[data-wa-number]").forEach((el) => (el.textContent = waPretty(WA_NUMBER)));
+    $$("[data-wa-block]").forEach((el) => (el.hidden = false));
+    $("#m-wa").hidden = false;
+  }
+
+  /* =======================================================
      PORTADA · líneas del fondo
      ======================================================= */
   (function drawLines() {
@@ -364,6 +382,7 @@
     $("#m-access").textContent = d.access;
     $("#m-tips").innerHTML = d.tips.map((s) => `<li>${esc(s)}</li>`).join("");
     $("#m-ask").dataset.id = d.id;
+    if (WA_NUMBER) $("#m-wa").href = waLink(`Hola, WILD. Quiero información para visitar ${d.name} (${d.place}, Huánuco).`);
     const prev = dests[(current - 1 + dests.length) % dests.length];
     const next = dests[(current + 1) % dests.length];
     $("#m-prev-name").textContent = prev.short;

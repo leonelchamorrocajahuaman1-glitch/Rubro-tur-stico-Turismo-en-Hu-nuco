@@ -222,8 +222,68 @@
     const on = !e.isIntersecting;
     bar.classList.toggle("is-on", on);
     bar.setAttribute("aria-hidden", String(!on));
-    $$("a", bar).forEach((a) => (on ? a.removeAttribute("tabindex") : a.setAttribute("tabindex", "-1")));
+    $$("a, button", bar).forEach((a) => (on ? a.removeAttribute("tabindex") : a.setAttribute("tabindex", "-1")));
+    toTop.hidden = !on;
   }, { rootMargin: "-30% 0px 0px 0px" }).observe(hero);
+
+  /* ----- sección activa en la barra ----- */
+  const barLinks = $$("#bar ul a");
+  const sectionIO = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      barLinks.forEach((a) => a.setAttribute("aria-current", String(a.getAttribute("href") === "#" + e.target.id)));
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  ["huanuco", "destinos", "experiencias", "planifica", "preguntas", "contacto"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) sectionIO.observe(el);
+  });
+
+  /* ----- volver arriba ----- */
+  const toTop = $("#toTop");
+  toTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: reduceMQ.matches ? "auto" : "smooth" });
+    $(".nav a").focus({ preventScroll: true });
+  });
+
+  /* ----- menú móvil ----- */
+  const menu = $("#menu"), menuBtn = $("#menuBtn");
+  function setMenu(open) {
+    menu.hidden = !open;
+    menuBtn.setAttribute("aria-expanded", String(open));
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    if (open) $(".menu__close", menu).focus();
+    else menuBtn.focus({ preventScroll: true });
+  }
+  menuBtn.addEventListener("click", () => setMenu(true));
+  menu.addEventListener("click", (e) => {
+    if (e.target === menu || e.target.closest("[data-menu-close]")) setMenu(false);
+    else if (e.target.closest("a")) setMenu(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (menu.hidden) return;
+    if (e.key === "Escape") { setMenu(false); return; }
+    if (e.key === "Tab") { // mantiene el foco dentro del menú
+      const items = $$("a, button", menu);
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  /* ----- los enlaces internos siempre funcionan, incluso durante la apertura ----- */
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || a.closest("dialog")) return;
+    const id = a.getAttribute("href").slice(1);
+    const target = id === "top" ? hero : document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    if (busy) settle();
+    unlock();
+    target.scrollIntoView({ behavior: reduceMQ.matches ? "auto" : "smooth" });
+    history.replaceState(null, "", id === "top" ? location.pathname + location.search : "#" + id);
+  });
 
   /* =======================================================
      IMÁGENES con respaldo
@@ -304,6 +364,14 @@
     $("#m-access").textContent = d.access;
     $("#m-tips").innerHTML = d.tips.map((s) => `<li>${esc(s)}</li>`).join("");
     $("#m-ask").dataset.id = d.id;
+    const prev = dests[(current - 1 + dests.length) % dests.length];
+    const next = dests[(current + 1) % dests.length];
+    $("#m-prev-name").textContent = prev.short;
+    $("#m-next-name").textContent = next.short;
+    $("#m-prev").setAttribute("aria-label", "Destino anterior: " + prev.short);
+    $("#m-next").setAttribute("aria-label", "Destino siguiente: " + next.short);
+    $("#m-count").textContent = `${current + 1} / ${dests.length}`;
+    $("#m-share span").textContent = "Copiar enlace";
     const body = $(".modal__body");
     body.scrollTop = 0;
     $(".modal__inner").scrollTop = 0;
@@ -329,9 +397,47 @@
   modal.addEventListener("click", (e) => {
     if (e.target === modal || e.target.closest("[data-close]")) closeModal();
   });
-  $("#m-next").addEventListener("click", () => {
-    fill(current + 1);
+  function go(step) {
+    fill(current + step);
     history.replaceState(null, "", `#destino-${dests[current].id}`);
+  }
+  $("#m-next").addEventListener("click", () => go(1));
+  $("#m-prev").addEventListener("click", () => go(-1));
+  modal.addEventListener("keydown", (e) => {
+    if (e.target.closest("input, textarea, select")) return;
+    if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+  });
+  // Deslizar en el celular para cambiar de destino
+  let touchX = null;
+  modal.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  modal.addEventListener("touchend", (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) > 70) go(dx < 0 ? 1 : -1);
+  });
+
+  // Copiar el enlace directo al destino
+  $("#m-share").addEventListener("click", async () => {
+    const label = $("#m-share span");
+    const url = location.href.split("#")[0] + "#destino-" + dests[current].id;
+    try {
+      await navigator.clipboard.writeText(url);
+      label.textContent = "¡Enlace copiado!";
+    } catch {
+      const tmp = document.createElement("textarea");
+      tmp.value = url;
+      tmp.setAttribute("readonly", "");
+      tmp.style.cssText = "position:fixed;opacity:0";
+      modal.appendChild(tmp);
+      tmp.select();
+      let ok = false;
+      try { ok = document.execCommand("copy"); } catch { ok = false; }
+      tmp.remove();
+      label.textContent = ok ? "¡Enlace copiado!" : "No se pudo copiar";
+    }
+    setTimeout(() => (label.textContent = "Copiar enlace"), 2200);
   });
   $("#m-ask").addEventListener("click", (e) => {
     e.preventDefault();

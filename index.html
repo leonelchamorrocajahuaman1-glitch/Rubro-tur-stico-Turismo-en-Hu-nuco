@@ -24,9 +24,40 @@
     <li><a href="#destinos" tabindex="-1">Destinos</a></li>
     <li><a href="#experiencias" tabindex="-1">Experiencias</a></li>
     <li><a href="#planifica" tabindex="-1">Planifica</a></li>
+    <li><a href="#preguntas" tabindex="-1">Preguntas</a></li>
   </ul>
   <a href="#contacto" class="bar__cta" tabindex="-1">Contacto</a>
+  <button class="bar__menu" id="menuBtn" type="button" tabindex="-1" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16"/><path d="M4 16h16"/></svg>
+  </button>
 </div>
+
+<!-- ======================= MENÚ MÓVIL ======================= -->
+<div class="menu" id="menu" hidden>
+  <div class="menu__panel" role="dialog" aria-modal="true" aria-label="Menú">
+    <div class="menu__top">
+      <span class="bar__logo">WI<i></i>LD</span>
+      <button class="menu__close" type="button" data-menu-close aria-label="Cerrar menú">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Menú móvil">
+      <ul class="menu__list">
+        <li><a href="#huanuco">Huánuco</a></li>
+        <li><a href="#destinos">Destinos</a></li>
+        <li><a href="#experiencias">Experiencias</a></li>
+        <li><a href="#planifica">Planifica tu visita</a></li>
+        <li><a href="#preguntas">Preguntas frecuentes</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+    <a class="btn menu__cta" href="#contacto">Solicitar información</a>
+  </div>
+</div>
+
+<button class="totop" id="toTop" type="button" aria-label="Volver arriba" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>
+</button>
 
 <!-- ======================= PORTADA ======================= -->
 <header class="hero" id="top">
@@ -43,7 +74,7 @@
       <li><a href="#contacto">Contacto</a></li>
     </ul>
     <ul class="nav__social">
-      <li><span class="nav__place">Huánuco, Perú</span></li>
+      <li><a class="nav__place" href="#huanuco">Huánuco, Perú</a></li>
     </ul>
   </nav>
 
@@ -201,6 +232,43 @@
     </div>
   </section>
 
+  <!-- ======================= PREGUNTAS ======================= -->
+  <section class="section faq" id="preguntas" aria-labelledby="faq-title">
+    <div class="wrap faq__grid">
+      <div class="reveal">
+        <p class="kicker">Preguntas frecuentes</p>
+        <h2 class="h-lg" id="faq-title">Lo que más<br>nos preguntan.</h2>
+        <p class="muted faq__aside">¿No encuentras tu respuesta? <a href="#contacto">Escríbenos</a> y te ayudamos a organizar tu viaje.</p>
+      </div>
+      <div class="faq__list reveal" id="faqList">
+        <details class="qa" open>
+          <summary>¿Cuál es la mejor época para visitar Huánuco?</summary>
+          <div class="qa__a"><p>La ciudad de Huánuco se disfruta todo el año por su clima templado y soleado. En Tingo María las lluvias son más intensas entre diciembre y marzo, así que los senderos y cataratas suelen estar más accesibles el resto del año. Si quieres ver la Danza de los Negritos, viaja en diciembre o enero.</p></div>
+        </details>
+        <details class="qa">
+          <summary>¿Cuántos días necesito?</summary>
+          <div class="qa__a"><p>Con tres días puedes conocer la ciudad de Huánuco y Kotosh, y pasar dos días en Tingo María. Para Huánuco Pampa suma una excursión aparte hacia La Unión. Mira la <a href="#planifica">ruta sugerida</a>.</p></div>
+        </details>
+        <details class="qa">
+          <summary>¿Cómo voy de la ciudad de Huánuco a Tingo María?</summary>
+          <div class="qa__a"><p>Por carretera, en transporte interprovincial o en auto, descendiendo de la sierra a la selva alta. Consulta horarios y empresas formales antes de viajar.</p></div>
+        </details>
+        <details class="qa">
+          <summary>¿Puede afectarme la altura?</summary>
+          <div class="qa__a"><p>Huánuco Pampa está en una meseta altoandina, donde el aire es más frío y delgado. Viaja con calma, aclimátate, bebe abundante agua y abrígate. Si tienes alguna condición de salud, consulta a tu médico antes del viaje.</p></div>
+        </details>
+        <details class="qa">
+          <summary>¿Cuánto cuestan las entradas y cuáles son los horarios?</summary>
+          <div class="qa__a"><p>Las tarifas y horarios del Parque Nacional Tingo María y de los sitios arqueológicos cambian. Confírmalos con el <a href="https://www.gob.pe/sernanp" target="_blank" rel="noopener">SERNANP</a> y el <a href="https://www.gob.pe/cultura" target="_blank" rel="noopener">Ministerio de Cultura</a>, o pregúntanos y te orientamos.</p></div>
+        </details>
+        <details class="qa">
+          <summary>¿Qué debo llevar a la Cueva de las Lechuzas?</summary>
+          <div class="qa__a"><p>Calzado con buen agarre y repelente. Dentro de la cueva no se permite comer, alimentar a la fauna ni apuntar linternas de luz blanca a las aves, y hay que mantenerse en el camino establecido.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- ======================= CONTACTO ======================= -->
   <section class="section" id="contacto" aria-labelledby="contact-title">
     <div class="wrap contact__grid">
@@ -280,7 +348,9 @@
           <li><a href="#destinos">Destinos</a></li>
           <li><a href="#experiencias">Experiencias</a></li>
           <li><a href="#planifica">Planifica tu visita</a></li>
+          <li><a href="#preguntas">Preguntas frecuentes</a></li>
           <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#top">Volver arriba ↑</a></li>
         </ul>
       </div>
       <div>
@@ -323,7 +393,21 @@
       </div>
       <div class="modal__actions">
         <a class="btn" href="#contacto" id="m-ask">Solicitar información</a>
-        <button class="btn btn--light" type="button" id="m-next">Siguiente destino →</button>
+        <button class="btn btn--light" type="button" id="m-share">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+          <span>Copiar enlace</span>
+        </button>
+      </div>
+      <div class="modal__pager">
+        <button class="pager__btn" type="button" id="m-prev" aria-label="Destino anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>
+          <span id="m-prev-name">Anterior</span>
+        </button>
+        <span class="pager__count" id="m-count" aria-live="polite">1 / 8</span>
+        <button class="pager__btn pager__btn--next" type="button" id="m-next" aria-label="Destino siguiente">
+          <span id="m-next-name">Siguiente</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </button>
       </div>
     </div>
   </div>
